@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EVT - Every Visitor's Trust</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-left">
+      <a href="#home" class="logo-link">
+        <img src="evt-logo.png" alt="EVT Logo" class="logo-img" />
+      </a>
+    </div>
+
+    <div class="nav-center">
+      <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search products, categories..." class="search-input" />
+        <button class="search-btn" onclick="searchProducts()"><i class="fas fa-search"></i></button>
+      </div>
+    </div>
+
+    <div class="nav-links">
+      <a href="#home"><i class="fas fa-home"></i> Home</a>
+      <a href="#categories"><i class="fas fa-th-large"></i> Categories</a>
+      <a href="#products"><i class="fas fa-box"></i> Products</a>
+      <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
+    </div>
+
+    <div class="nav-right">
+      <button class="cart-btn" onclick="toggleCart()">
+        <i class="fa fa-shopping-cart"></i>
+        <span id="cartCount" class="cart-count">0</span>
+      </button>
+
+      <button class="login-btn" id="loginBtn">
+        <i class="fas fa-sign-in-alt"></i> Login
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <h1>Every Visitor's Trust</h1>
+    <div class="trust-badge">
+      <i class="fas fa-certificate"></i>
+      <span><strong>EVT Verified & Certified Platform – Trusted by Thousands!</strong></span>
+    </div>
+    <p>Empowering Startups, Building Trust, Connecting Communities</p>
+    <div class="trust-badge">
+      <i class="fas fa-shield-alt"></i>
+      <span><strong>100% Verified</strong> Products & Sellers</span>
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section class="categories" id="categories">
+    <h2>Shop By Category</h2>
+    <div class="category-grid">
+      <div class="category-card" onclick="filterByCategory('fashion')"><i class="fas fa-tshirt"></i><h3>Fashion</h3></div>
+      <div class="category-card" onclick="filterByCategory('electronics')"><i class="fas fa-laptop"></i><h3>Electronics</h3></div>
+      <div class="category-card" onclick="filterByCategory('kitchen')"><i class="fas fa-utensils"></i><h3>Kitchen</h3></div>
+      <div class="category-card" onclick="filterByCategory('home')"><i class="fas fa-home"></i><h3>Home & Living</h3></div>
+      <div class="category-card" onclick="filterByCategory('beauty')"><i class="fas fa-spa"></i><h3>Beauty</h3></div>
+      <div class="category-card" onclick="filterByCategory('sports')"><i class="fas fa-football-ball"></i><h3>Sports</h3></div>
+    </div>
+  </section>
+
+  <!-- Products Section -->
+  <section class="products-section" id="products">
+    <div class="products-header">
+      <h2>Our Products</h2>
+      <div class="filter-controls">
+        <label for="sortSelect" class="sort-label">
+          <i class="fas fa-sort-amount-down"></i> Sort By:
+        </label>
+        <select id="sortSelect" onchange="sortProducts(this.value)">
+          <option value="">Sort By</option>
+          <option value="price-low">Price: Low to High</option>
+          <option value="price-high">Price: High to Low</option>
+          <option value="rating">Rating</option>
+          <option value="newest">Newest First</option>
+        </select>
+      </div>
+    </div>
+    <div class="products-grid" id="productsGrid">
+      <p style="grid-column:1/-1;text-align:center;color:#777;">Loading products...</p>
+    </div>
+  </section>
+
+  <!-- Cart Sidebar -->
+  <div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+      <h3>Your Cart</h3>
+      <button class="close-cart-btn" onclick="toggleCart()">&times;</button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-footer">
+      <div class="cart-total"><span>Total:</span><span id="cartTotal">₹0</span></div>
+      <button class="checkout-btn" onclick="checkout()">Checkout</button>
+    </div>
+  </div>
+
+  <!-- Product Details Modal -->
+  <div id="productModal" class="modal">
+    <div class="modal-content product-modal-content">
+      <span class="close-btn" onclick="closeProductModal()">&times;</span>
+      <div class="product-detail" id="productDetails">
+        <img id="modalProductImage" src="" alt="Product Image" class="modal-product-img">
+        <h2 id="modalProductName"></h2>
+        <p id="modalProductDesc"></p>
+        <p class="modal-product-price" id="modalProductPrice"></p>
+        <button class="add-to-cart-btn" id="modalAddToCart">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <section class="features" id="features">
+    <h2>Why Choose EVT?</h2>
+    <div class="feature-grid">
+      <div class="feature-card"><i class="fas fa-lock"></i><h3>Secure Payments</h3><p>End-to-end encrypted transactions</p></div>
+      <div class="feature-card"><i class="fas fa-badge-check"></i><h3>Verified Products</h3><p>All sellers verified before listing</p></div>
+      <div class="feature-card"><i class="fas fa-dollar-sign"></i><h3>Low Costs</h3><p>Optimized operations for affordable prices</p></div>
+      <div class="feature-card"><i class="fas fa-map-marker-alt"></i><h3>Local Support</h3><p>Empowering local entrepreneurs</p></div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact" id="contact">
+    <h2>Get In Touch | <a href="https://forms.gle/Y9Se53e9XvZDrwZ98" target="_blank" class="help-link">Write Us</a></h2>
+    <div class="contact-grid">
+      <div class="contact-card"><i class="fas fa-envelope"></i><h3>Email</h3><p>support@evt.com</p></div>
+      <div class="contact-card"><i class="fas fa-phone"></i><h3>Phone</h3><p>+91-1234567890</p></div>
+      <div class="contact-card"><i class="fas fa-map-marker-alt"></i><h3>Location</h3><p>IMS Engineering College, Ghaziabad</p></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section"><h3>About EVT</h3><a href="#" onclick="openStory()">Our Story</a><a href="#" onclick="openCareers()">Careers</a></div>
+      <div class="footer-section"><h3>Support</h3><a href="https://forms.gle/Y9Se53e9XvZDrwZ98">Help Center</a><a href="#" onclick="openSafety()">Safety & Trust</a></div>
+      <div class="footer-section"><h3>Sell With Us</h3><a href="#" onclick="openSeller()">Become a Seller</a></div>
+    </div>
+  </footer>
+
+  <!-- Our Story Modal -->
+  <div class="modal" id="storyModal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeStory()">&times;</span>
+      <h2>Our Story – Team EVT</h2>
+      <p>EVT (Every Visitor's Trust) was built with teamwork, dedication, and a passion for innovation. As the Team Lead, I coordinated members in design, logic, and testing to ensure a smooth collaboration across all modules. Our collective effort transformed an idea into a full-fledged e-commerce ecosystem for learners and creators alike.</p>
+    </div>
+  </div>
+
+  <!-- Career Modal -->
+  <div class="modal" id="careerModal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeCareers()">&times;</span>
+      <h2>Careers at EVT</h2>
+      <p>Currently, there are no active vacancies. Please keep visiting this space for more updates.</p>
+    </div>
+  </div>
+
+  <!-- Seller Modal -->
+  <div class="modal" id="sellerModal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeSeller()">&times;</span>
+      <h2>Become a Seller</h2>
+      <p>Join EVT as a seller and reach thousands of customers! Click below to get started.</p>
+      <button class="submit-btn" onclick="requestBecomeSeller();closeSeller()">Request Seller Access</button>
+      <p style="margin-top:1rem;font-size:0.9rem;color:#666;">You must be logged in to become a seller.</p>
+    </div>
+  </div>
+
+  <!-- Safety & Trust Modal -->
+  <div class="modal" id="safetyModal">
+    <div class="modal-content safety-modal-content">
+      <span class="close-btn" onclick="closeSafety()">&times;</span>
+      <h2 class="trust-title">🛡️ Certified & Trusted Platform</h2>
+      <p class="trust-intro">EVT – Every Visitor's Trust – is built on authenticity, transparency, and technology-driven assurance. Here's why millions of visitors can rely on us:</p>
+      <ul class="trust-points">
+        <li><i class="fas fa-shield-alt"></i> <strong>Verified Sellers & Products</strong> – every listing is manually verified before approval.</li>
+        <li><i class="fas fa-lock"></i> <strong>Secure Transactions</strong> – 256-bit encryption protects every payment.</li>
+        <li><i class="fas fa-id-badge"></i> <strong>Authentic User Profiles</strong> – KYC-verified accounts ensure real interactions.</li>
+        <li><i class="fas fa-certificate"></i> <strong>Certified Quality</strong> – products carry EVT Quality Mark certified by our audit team.</li>
+        <li><i class="fas fa-hand-holding-heart"></i> <strong>Community Trust Score</strong> – products gain visibility based on buyer feedback.</li>
+        <li><i class="fas fa-globe"></i> <strong>Global Compliance</strong> – follows GDPR & Indian E-Commerce Regulations 2025.</li>
+        <li><i class="fas fa-balance-scale"></i> <strong>Fair Pricing Policy</strong> – real-time algorithms ensure transparent pricing.</li>
+      </ul>
+      <p class="trust-footer">EVT's mission is simple – to be a <em>platform you can believe in.</em><br><strong>Trust isn't just our name – it's our identity.</strong></p>
+    </div>
+  </div>
+
+  <footer class="footer-bottom-glow">
+    <p>© 2025 <i class="fas fa-copyright"></i> All Rights Reserved | Made with <i class="fas fa-heart"></i> by <strong>Group 12</strong></p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

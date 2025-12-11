@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - EVT</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #e53935, #1e88e5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      animation: float 8s ease-in-out infinite;
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0px) translateX(0px);
+        opacity: 0.3;
+      }
+
+      50% {
+        transform: translateY(-30px) translateX(20px);
+        opacity: 0.6;
+      }
+    }
+
+    .login-box {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+      width: 380px;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      z-index: 10;
+      animation: slideIn 0.5s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    h2 {
+      text-align: center;
+      color: #fff;
+      margin-bottom: 1.8rem;
+      letter-spacing: 1.5px;
+      font-size: 1.8rem;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 0.7rem;
+      border: none;
+      background: rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.7);
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 600;
+    }
+
+    .tab.active {
+      background: rgba(255, 255, 255, 0.3);
+      color: white;
+    }
+
+    .input-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.95rem;
+      color: #f1f1f1;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      border-radius: 0.6rem;
+      border: none;
+      outline: none;
+      background: rgba(255, 255, 255, 0.25);
+      color: #fff;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    input::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    input:focus,
+    select:focus {
+      background: rgba(255, 255, 255, 0.35);
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+      transform: translateY(-2px);
+    }
+
+    select {
+      cursor: pointer;
+    }
+
+    select option {
+      background: #1e88e5;
+      color: white;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      padding: 1rem;
+      border: none;
+      border-radius: 0.6rem;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-top: 0.5rem;
+    }
+
+    button[type="submit"]:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      background: linear-gradient(90deg, #5a67d8, #6b46c1);
+    }
+
+    button[type="submit"]:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .back-link {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .back-link a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .back-link a:hover {
+      transform: translateX(-5px);
+      text-decoration: underline;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Background Particles -->
+  <div class="particle" style="width: 80px; height: 80px; top: 10%; left: 15%; animation-delay: 0s;"></div>
+  <div class="particle" style="width: 60px; height: 60px; top: 70%; left: 80%; animation-delay: 2s;"></div>
+  <div class="particle" style="width: 100px; height: 100px; top: 40%; left: 70%; animation-delay: 4s;"></div>
+  <div class="particle" style="width: 50px; height: 50px; top: 80%; left: 20%; animation-delay: 1s;"></div>
+  <div class="particle" style="width: 70px; height: 70px; top: 20%; left: 85%; animation-delay: 3s;"></div>
+
+  <div class="login-box">
+    <h2>Welcome to EVT!</h2>
+
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('login')">Login</button>
+      <button class="tab" onclick="switchTab('register')">Register</button>
+    </div>
+
+    <!-- Login Form -->
+    <form id="loginForm">
+      <div class="input-group">
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" placeholder="Enter your email" required />
+      </div>
+      <div class="input-group">
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" placeholder="Enter your password" required />
+      </div>
+      <button type="submit">Login</button>
+    </form>
+
+    <!-- Register Form -->
+    <form id="registerForm" class="hidden">
+      <div class="input-group">
+        <label for="registerName">Full Name</label>
+        <input type="text" id="registerName" placeholder="Enter your full name" required />
+      </div>
+      <div class="input-group">
+        <label for="registerEmail">Email</label>
+        <input type="email" id="registerEmail" placeholder="Enter your email" required />
+      </div>
+      <div class="input-group">
+        <label for="registerPassword">Password</label>
+        <input type="password" id="registerPassword" placeholder="Create a password (min 6 characters)" minlength="6"
+          required />
+      </div>
+      <div class="input-group">
+        <label for="registerRole">I want to join as</label>
+        <select id="registerRole" required>
+          <option value="user">Buyer</option>
+          <option value="seller">Seller</option>
+        </select>
+      </div>
+      <button type="submit">Register</button>
+    </form>
+
+    <div class="back-link">
+      <a href="index.html">← Back to Home</a>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = 'http://localhost:5000/api';
+
+    function switchTab(tab) {
+      const loginForm = document.getElementById('loginForm');
+      const registerForm = document.getElementById('registerForm');
+      const tabs = document.querySelectorAll('.tab');
+
+      tabs.forEach(t => t.classList.remove('active'));
+
+      if (tab === 'login') {
+        loginForm.classList.remove('hidden');
+        registerForm.classList.add('hidden');
+        tabs[0].classList.add('active');
+      } else {
+        loginForm.classList.add('hidden');
+        registerForm.classList.remove('hidden');
+        tabs[1].classList.add('active');
+      }
+    }
+
+    // Login Form Handler
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      const btn = e.target.querySelector('button[type="submit"]');
+
+      btn.disabled = true;
+      btn.textContent = 'Logging in...';
+
+      try {
+        const response = await fetch(`${API_URL}/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          localStorage.setItem('authToken', data.token);
+          localStorage.setItem('currentUser', JSON.stringify(data.user));
+          alert(`Welcome back, ${data.user.name}!`);
+
+          if (data.user.role === 'seller') {
+            window.location.href = 'seller-dashboard.html';
+          } else {
+            window.location.href = 'index.html';
+          }
+        } else {
+          alert(data.message || 'Login failed');
+          btn.disabled = false;
+          btn.textContent = 'Login';
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        alert('Login failed. Please check your connection.');
+        btn.disabled = false;
+        btn.textContent = 'Login';
+      }
+    });
+
+    // Register Form Handler
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('registerName').value.trim();
+      const email = document.getElementById('registerEmail').value.trim();
+      const password = document.getElementById('registerPassword').value;
+      const role = document.getElementById('registerRole').value;
+      const btn = e.target.querySelector('button[type="submit"]');
+
+      btn.disabled = true;
+      btn.textContent = 'Creating account...';
+
+      try {
+        const response = await fetch(`${API_URL}/auth/register`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, password, role })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          localStorage.setItem('authToken', data.token);
+          localStorage.setItem('currentUser', JSON.stringify(data.user));
+          alert(`Welcome, ${data.user.name}! Account created successfully.`);
+
+          if (data.user.role === 'seller') {
+            window.location.href = 'seller-dashboard.html';
+          } else {
+            window.location.href = 'index.html';
+          }
+        } else {
+          alert(data.message || 'Registration failed');
+          btn.disabled = false;
+          btn.textContent = 'Register';
+        }
+      } catch (error) {
+        console.error('Registration error:', error);
+        alert('Registration failed. Please try again.');
+        btn.disabled = false;
+        btn.textContent = 'Register';
+      }
+    });
+  </script>
+</body>
+
+</html>

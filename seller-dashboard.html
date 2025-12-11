@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seller Dashboard - EVT</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+    }
+
+    .navbar {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 1rem 2rem;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar h1 {
+      font-size: 1.5rem;
+    }
+
+    .navbar button {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: white;
+      padding: 0.6rem 1.5rem;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-left: 1rem;
+    }
+
+    .navbar button:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      text-align: center;
+    }
+
+    .stat-card i {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stat-card h3 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-card p {
+      color: #666;
+    }
+
+    .section {
+      background: white;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      margin-bottom: 2rem;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .section h2 {
+      color: #333;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: transform 0.3s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #ff5252, #ff1744);
+    }
+
+    .btn-edit {
+      background: linear-gradient(135deg, #4caf50, #388e3c);
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .product-card {
+      background: #f9f9f9;
+      border-radius: 10px;
+      padding: 1rem;
+      border: 1px solid #e0e0e0;
+      transition: transform 0.3s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .product-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: #333;
+    }
+
+    .product-card .price {
+      font-size: 1.3rem;
+      color: #667eea;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .product-card .stock {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 1rem;
+    }
+
+    .product-card .actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .product-card button {
+      flex: 1;
+      padding: 0.6rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 600px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-content h2 {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #333;
+      font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .form-actions button {
+      flex: 1;
+      padding: 1rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-cancel {
+      background: #e0e0e0;
+      color: #333;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: #999;
+    }
+
+    .empty-state i {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+
+    .image-preview {
+      margin-top: 1rem;
+      max-width: 100%;
+      border-radius: 8px;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar">
+    <h1><i class="fas fa-store"></i> Seller Dashboard</h1>
+    <div>
+      <button onclick="window.location.href='index.html'">
+        <i class="fas fa-home"></i> Home
+      </button>
+      <button onclick="logout()">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <i class="fas fa-box"></i>
+        <h3 id="totalProducts">0</h3>
+        <p>Total Products</p>
+      </div>
+      <div class="stat-card">
+        <i class="fas fa-check-circle"></i>
+        <h3 id="activeProducts">0</h3>
+        <p>Active Products</p>
+      </div>
+      <div class="stat-card">
+        <i class="fas fa-warehouse"></i>
+        <h3 id="totalStock">0</h3>
+        <p>Total Stock</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header">
+        <h2>My Products</h2>
+        <button class="btn" onclick="openAddProductModal()">
+          <i class="fas fa-plus"></i> Add New Product
+        </button>
+      </div>
+      <div class="products-grid" id="productsGrid"></div>
+      <div id="emptyState" class="empty-state" style="display:none;">
+        <i class="fas fa-box-open"></i>
+        <h3>No products yet</h3>
+        <p>Start by adding your first product!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add/Edit Product Modal -->
+  <div class="modal" id="productModal">
+    <div class="modal-content">
+      <h2 id="modalTitle">Add New Product</h2>
+      <form id="productForm" enctype="multipart/form-data">
+        <div class="form-group">
+          <label>Product Name *</label>
+          <input type="text" id="productName" required />
+        </div>
+        <div class="form-group">
+          <label>Description *</label>
+          <textarea id="productDescription" required></textarea>
+        </div>
+        <div class="form-group">
+          <label>Price (₹) *</label>
+          <input type="number" id="productPrice" min="0" step="0.01" required />
+        </div>
+        <div class="form-group">
+          <label>Category *</label>
+          <select id="productCategory" required>
+            <option value="">Select Category</option>
+            <option value="fashion">Fashion</option>
+            <option value="electronics">Electronics</option>
+            <option value="kitchen">Kitchen</option>
+            <option value="home">Home & Living</option>
+            <option value="beauty">Beauty</option>
+            <option value="sports">Sports</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Stock Quantity *</label>
+          <input type="number" id="productStock" min="0" required />
+        </div>
+        <div class="form-group">
+          <label>Product Image *</label>
+          <input type="file" id="productImage" accept="image/*" />
+          <img id="imagePreview" class="image-preview" />
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" onclick="closeProductModal()">Cancel</button>
+          <button type="submit" class="btn">Save Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="seller.js"></script>
+</body>
+
+</html>
